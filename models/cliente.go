@@ -6,7 +6,7 @@ type Cliente struct {
 	IDHistorial    int     `gorm:""`
 	NombreDueno    string  `gorm:""`
 	NombrePaciente string  `gorm:""`
-	Telefono       int     `gorm:""`
+	Telefono       string  `gorm:""`
 	TipoAnimal     string  `gorm:""`
 	Peso           float32 `gorm:""`
 	Edad           int     `gorm:""`
