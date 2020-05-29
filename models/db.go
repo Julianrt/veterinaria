@@ -4,21 +4,39 @@ import (
 	"log"
 
 	"github.com/jinzhu/gorm"
+
+	//sqlite is used to handle sqlite dialect with gorm
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
-//InitDB inicia una conexion con la base de datos y
-//Hace una automigracion de los modelos para crear o
-//modificar las tablas si hubo algun cambio en el modelo
+var db *gorm.DB
+
+//InitDB connect to db and creates or automigrates tables
 func InitDB() {
-	db, err := gorm.Open("sqlite3", "test.db")
-	if err != nil {
-		panic("failed to connect database")
+	CreateDBConn()
+	autoMigrateTables()
+}
+
+//CreateDBConn inicia una conexion con la base de datos
+func CreateDBConn() {
+	var err error
+
+	if getConnection() != nil {
+		log.Println("a db connections already exists")
+		return
+	}
+
+	db, err = gorm.Open("sqlite3", "veterinaria.db")
+	if err != nil || db == nil {
+		panic("it couldn't connect -> " + err.Error())
 	} else {
 		log.Println("db connection OK")
 	}
-	defer db.Close()
+}
 
+//Hace una automigracion de los modelos para crear o
+//modificar las tablas si hubo algun cambio en el modelo
+func autoMigrateTables() {
 	// Migrate the schema
 	db.AutoMigrate(&Agenda{})
 	db.AutoMigrate(&Cita{})
@@ -27,12 +45,51 @@ func InitDB() {
 	db.AutoMigrate(&Empleado{})
 	db.AutoMigrate(&Historial{})
 	db.AutoMigrate(&Venta{})
+}
 
-	db.Create(&Empleado{Nombre: "nombre1", Direccion: "Direccion1", Telefono: "1234567890"})
-	db.Create(&Empleado{Nombre: "nombre3", Direccion: "Direccion3", Telefono: "1234567890"})
-	db.Create(&Empleado{Nombre: "nombre2", Direccion: "Direccion2", Telefono: "1234567890"})
+func getConnection() *gorm.DB {
+	return db
+}
 
-	var empleados []Empleado
-	db.Find(&empleados)
-	log.Println(empleados)
+//CloseConnection closes connection with db
+func CloseConnection() {
+	if err := db.Close(); err != nil {
+		log.Println(err.Error())
+	}
+}
+
+//Create creates a new record on a table
+func Create(value interface{}) error {
+	result := db.Create(value)
+	return result.Error
+}
+
+//First gets a record by a condition
+func First(out interface{}, where ...interface{}) error {
+	result := db.First(out, where...)
+	return result.Error
+}
+
+//Find gets records
+func Find(out interface{}, where ...interface{}) error {
+	result := db.Find(out, where...)
+	return result.Error
+}
+
+//Save changes on db
+func Save(value interface{}) error {
+	result := db.Save(value)
+	return result.Error
+}
+
+//Where looks for records
+func Where(query interface{}, args ...interface{}) error {
+	result := db.Where(query, args...)
+	return result.Error
+}
+
+//Delete deletes a record
+func Delete(value interface{}, where ...interface{}) error {
+	result := db.Delete(value, where...)
+	return result.Error
 }
