@@ -9,6 +9,27 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
+const (
+	//EQUAL e
+	EQUAL = " = "
+	//DIFFERENT e
+	DIFFERENT = " <> "
+	//IN e
+	IN = " IN "
+	//LIKE e
+	LIKE = " LIKE "
+	//AND e
+	AND = " AND "
+	//GREATER e
+	GREATER = " > "
+	//LESS e
+	LESS = " < "
+	//QUESTION e
+	QUESTION = "?"
+	//INQUESTION e
+	INQUESTION = "(?)"
+)
+
 var db *gorm.DB
 
 //InitDB connect to db and creates or automigrates tables
@@ -67,6 +88,12 @@ func Create(value interface{}) error {
 //First gets a record by a condition
 func First(out interface{}, where ...interface{}) error {
 	result := db.First(out, where...)
+	return result.Error
+}
+
+//FirstWithCondition gets a record by a condition with a specific column
+func FirstWithCondition(out interface{}, query interface{}, value interface{}) error {
+	result := db.Where(query, value).First(out)
 	return result.Error
 }
 

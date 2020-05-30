@@ -9,46 +9,35 @@ import (
 func main() {
 	models.InitDB()
 
-	var err error
+	cliente1 := models.NewCliente(111, "Panfilooo", "Panfilito", "6622240000", "perro", 2.4, 2, "parvovirus")
+	cliente2 := models.NewCliente(111, "Panfilo Dominguez", "Panfilito", "6622240000", "perro", 2.4, 2, "parvovirus")
+	cliente3 := models.NewCliente(111, "Panfilo", "Panfilito", "6622240000", "perro", 2.4, 2, "parvovirus")
+	cliente4 := models.NewCliente(111, "Panfiloooo123", "Panfilito", "6622240000", "perro", 2.4, 2, "parvovirus")
 
-	err = models.Create(&models.Empleado{Nombre: "nombre1", Direccion: "Direccion1", Telefono: "1234567890"})
-	err = models.Create(&models.Empleado{Nombre: "nombre2", Direccion: "Direccion2", Telefono: "1234567890"})
-	err = models.Create(&models.Empleado{Nombre: "nombre3", Direccion: "Direccion3", Telefono: "1234567890"})
+	log.Println(cliente2)
+	cliente1.Save()
+	cliente2.Save()
+	cliente3.Save()
+	cliente4.Save()
+	log.Println(cliente2)
 
+	log.Println("--------------------------------------")
+	clientes, err := models.GetClientes()
 	if err != nil {
-		log.Println(err.Error())
-	} else {
-		log.Println("Hola1")
+		log.Println("Error al obtener todos los clientes -> " + err.Error())
+		return
 	}
+	log.Println(clientes)
+	log.Println("--------------------------------------")
 
-	var empleados []models.Empleado
-	if err = models.Find(&empleados); err != nil {
-		log.Println(err)
-	} else {
-		log.Println("Hola2")
-	}
-	log.Println(empleados)
-
-	log.Println("-------------------------------------")
-
-	var empleado models.Empleado
-	models.First(&empleado, 2)
-	log.Println(empleado)
-
-	empleado.Nombre = "Panfilo"
-	empleado.IDEmpleado = 0
-	models.Save(&empleado)
-
-	models.First(&empleado, 2)
-	log.Println(empleado)
-
-	models.Find(&empleados)
-	log.Println(empleados)
+	cliente3.Edad = 10
+	cliente3.Save()
+	log.Println(cliente3)
 
 	log.Println("--------------------------------------")
 
-	models.Delete(empleado)
-	models.Find(&empleados)
-	log.Println(empleados)
+	cliente1.Delete()
 
+	clientes, _ = models.GetClientes()
+	log.Println(clientes)
 }
