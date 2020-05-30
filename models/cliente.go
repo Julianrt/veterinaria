@@ -6,15 +6,15 @@ import (
 
 //Cliente estructura para manejar el modelo cliente
 type Cliente struct {
-	IDDueno        int     `gorm:"PRIMARY_KEY; AUTO_INCREMENT"`
-	IDHistorial    int     `gorm:""`
-	NombreDueno    string  `gorm:""`
-	NombrePaciente string  `gorm:""`
-	Telefono       string  `gorm:""`
-	TipoAnimal     string  `gorm:""`
-	Peso           float32 `gorm:""`
-	Edad           int     `gorm:""`
-	Vacunas        string  `gorm:""`
+	IDDueno        int     `gorm:"PRIMARY_KEY; AUTO_INCREMENT" json:"id_dueno"`
+	IDHistorial    int     `gorm:"" json:"id_historial"`
+	NombreDueno    string  `gorm:"" json:"nombre_dueno"`
+	NombrePaciente string  `gorm:"" json:"nombre_paciente"`
+	Telefono       string  `gorm:"" json:"telefono"`
+	TipoAnimal     string  `gorm:"" json:"tipo_animal"`
+	Peso           float32 `gorm:"" json:"peso"`
+	Edad           int     `gorm:"" json:"edad"`
+	Vacunas        string  `gorm:"" json:"vacunas"`
 }
 
 //Clientes lista de cliente

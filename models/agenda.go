@@ -7,10 +7,10 @@ import (
 
 //Agenda estructura para manejar el modelo de agenda
 type Agenda struct {
-	IDAgenda   int       `gorm:"PRIMARY_KEY; AUTO_INCREMENT"`
-	IDDueno    int       `gorm:""`
-	IDServicio int       `gorm:""`
-	Fecha      time.Time `gorm:""`
+	IDAgenda   int       `gorm:"PRIMARY_KEY; AUTO_INCREMENT" json:"id_agenda"`
+	IDDueno    int       `gorm:"" json:"id_dueno"`
+	IDServicio int       `gorm:"" json:"id_servicio"`
+	Fecha      time.Time `gorm:"" json:"fecha"`
 }
 
 //Agendas lista de agenda

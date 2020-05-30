@@ -4,10 +4,10 @@ import "errors"
 
 //Empleado estructura para manejar el modelo de empleados
 type Empleado struct {
-	IDEmpleado int    `gorm:"PRIMARY_KEY;AUTO_INCREMENT"`
-	Nombre     string `gorm:""`
-	Direccion  string `gorm:""`
-	Telefono   string `gorm:""`
+	IDEmpleado int    `gorm:"PRIMARY_KEY;AUTO_INCREMENT" json:"id_empleado"`
+	Nombre     string `gorm:"" json:"nombre"`
+	Direccion  string `gorm:"" json:"direccion"`
+	Telefono   string `gorm:"" json:"telefono"`
 }
 
 //Empleados lista de Empleado

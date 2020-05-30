@@ -6,9 +6,9 @@ import (
 
 //DetalleVenta estructura para manejar el modelo de los detalles de venta
 type DetalleVenta struct {
-	IDDetalleVenta int `gorm:"PRIMARY_KEY;AUTO_INCREMENT"`
-	IDServicio     int `gorm:""`
-	IDVenta        int `gorm:""`
+	IDDetalleVenta int `gorm:"PRIMARY_KEY;AUTO_INCREMENT" json:"id_detalle_venta"`
+	IDServicio     int `gorm:"" json:"id_servicio"`
+	IDVenta        int `gorm:"" json:"id_venta"`
 }
 
 //DetalleVentas lista de detalle venta
