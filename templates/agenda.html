@@ -1,0 +1,70 @@
+{{define "agenda"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>agenda</title>
+    
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body class="grey lighten-3">
+    
+    <nav>
+        <div class="nav-wrapper teal">
+        <a href="/historial/" class="brand-logo right">veterinaria</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="/historial/">Historial</a></li>
+                <li class="active"><a href="/agenda/">Agenda</a></li>
+                <li><a href="/registrar/">Registrar</a></li>
+                <li><a href="/consulta/">Consulta</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+    
+                            <div class="row">
+                                <div class="col s12">
+                                    <h3 class="center">Agenda</h3>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <table class="centered highlight striped">
+                                    <thead>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>nombre del cliente</th>
+                                            <th>fecha</th>
+                                            <th>telefono</th>
+                                        </tr>
+                                    </thead>
+                            
+                                    <tbody>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>set</td>
+                                            <td>1 / 6 / 2020 - 17:30</td>
+                                            <td>0000000000</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    
+</body>
+</html>
+{{end}}

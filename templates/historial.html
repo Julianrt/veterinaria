@@ -1,0 +1,80 @@
+{{define "historial"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>historial</title>
+    
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body class="grey lighten-3">
+    
+    <nav>
+        <div class="nav-wrapper teal">
+        <a href="/historial/" class="brand-logo right">veterinaria</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li class="active"><a href="/historial/">Historial</a></li>
+                <li><a href="/agenda/">Agenda</a></li>
+                <li><a href="/registrar/">Registrar</a></li>
+                <li><a href="/consulta/">Consulta</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col s10 offset-s1">
+            <div class="row">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+    
+                            <div class="row">
+                                <div class="col s12">
+                                    <h3 class="center">Historial</h3>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <table class="centered highlight striped">
+                                    <thead>
+                                        <tr>
+                                            <th>id historial</th>
+                                            <th>id dueño</th>
+                                            <th>nombre</th>
+                                            <th>tipo de animal</th>
+                                            <th>vacunas</th>
+                                            <th>peso</th>
+                                            <th>tamaño</th>
+                                            <th>enfermedades</th>
+                                            <th>medicamentos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>5</td>
+                                            <td>set</td>
+                                            <td>perro</td>
+                                            <td>parvovirus</td>
+                                            <td>3.5</td>
+                                            <td>1</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+{{end}}
