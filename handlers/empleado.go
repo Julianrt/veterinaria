@@ -17,7 +17,7 @@ func CreateEmpleado(c *fiber.Ctx) {
 		c.Status(http.StatusBadRequest).Send(err.Error())
 		return
 	}
-	if len(e.Nombre) < 1 {
+	if len(e.NombreEmpleado) < 1 {
 		c.Status(http.StatusBadRequest).Send("Necesario ingresar el nombre")
 		return
 	}
@@ -74,7 +74,7 @@ func UpdateEmpleado(c *fiber.Ctx) {
 		c.Status(http.StatusBadRequest).Send(err.Error())
 		return
 	}
-	if len(empleado.Nombre) < 1 {
+	if len(empleado.NombreEmpleado) < 1 {
 		c.Status(http.StatusBadRequest).Send("Necesario ingresar el nombre")
 		return
 	}
