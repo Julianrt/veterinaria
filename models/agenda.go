@@ -7,21 +7,19 @@ import (
 
 //Agenda estructura para manejar el modelo de agenda
 type Agenda struct {
-	IDAgenda   int       `gorm:"PRIMARY_KEY; AUTO_INCREMENT" json:"id_agenda"`
-	IDDueno    int       `gorm:"" json:"id_dueno"`
-	IDServicio int       `gorm:"" json:"id_servicio"`
-	Fecha      time.Time `gorm:"" json:"fecha"`
+	IDAgenda      int       `gorm:"PRIMARY_KEY; AUTO_INCREMENT" json:"id_agenda"`
+	FechaOcupadas time.Time `gorm:"" json:"fecha_ocupadas"`
+	HoraOcupadas  time.Time `gorm:"" json:"hora_ocupadas"`
 }
 
 //Agendas lista de agenda
 type Agendas []Agenda
 
 //NewAgenda Crea y retorna una agenda
-func NewAgenda(idDueno, idServicio int, fecha time.Time) *Agenda {
+func NewAgenda(fechaOcupadas, horaOcupadas time.Time) *Agenda {
 	agenda := &Agenda{
-		IDDueno:    idDueno,
-		IDServicio: idServicio,
-		Fecha:      fecha,
+		FechaOcupadas: fechaOcupadas,
+		HoraOcupadas:  horaOcupadas,
 	}
 	return agenda
 }

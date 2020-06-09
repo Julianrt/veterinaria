@@ -7,21 +7,23 @@ import (
 
 //Venta estructura para manejar el modelo de las ventas
 type Venta struct {
-	IDVenta    int       `gorm:"PRIMARY_KEY;AUTO_INCREMENT" json:"id_venta"`
-	IDEmpleado int       `gorm:"" json:"id_empleado"`
-	Total      float32   `gorm:"" json:"total"`
-	Fecha      time.Time `gorm:"" json:"fecha"`
+	IDVenta      int       `gorm:"PRIMARY_KEY;AUTO_INCREMENT" json:"id_venta"`
+	IDServicio   int       `gorm:"" json:"id_servicio"`
+	IDEmpleado   int       `gorm:"" json:"id_empleado"`
+	FechaVenta   time.Time `gorm:"" json:"fecha_venta"`
+	PagoServicio float32   `gorm:"" json:"pago_servicio"`
 }
 
 //Ventas es una lista de venta
 type Ventas []Venta
 
 //NewVenta f
-func NewVenta(idEmpleado int, total float32, fecha time.Time) *Venta {
+func NewVenta(idServicio, idEmpleado int, fechaVenta time.Time, pagoServicio float32) *Venta {
 	v := &Venta{
-		IDEmpleado: idEmpleado,
-		Total:      total,
-		Fecha:      fecha,
+		IDServicio:   idServicio,
+		IDEmpleado:   idEmpleado,
+		FechaVenta:   fechaVenta,
+		PagoServicio: pagoServicio,
 	}
 	return v
 }

@@ -6,33 +6,24 @@ import (
 
 //Cliente estructura para manejar el modelo cliente
 type Cliente struct {
-	IDDueno        int     `gorm:"PRIMARY_KEY; AUTO_INCREMENT" json:"id_dueno"`
-	IDHistorial    int     `gorm:"" json:"id_historial"`
-	NombreDueno    string  `gorm:"" json:"nombre_dueno"`
-	NombrePaciente string  `gorm:"" json:"nombre_paciente"`
-	Telefono       string  `gorm:"" json:"telefono"`
-	TipoAnimal     string  `gorm:"" json:"tipo_animal"`
-	Peso           float32 `gorm:"" json:"peso"`
-	Edad           int     `gorm:"" json:"edad"`
-	Vacunas        string  `gorm:"" json:"vacunas"`
+	IDDueno     int    `gorm:"PRIMARY_KEY; AUTO_INCREMENT" json:"id_dueno"`
+	IDMascota   int    `gorm:"" json:"id_mascota"`
+	NombreDueno string `gorm:"" json:"nombre_dueno"`
+	Telefono    string `gorm:"" json:"telefono"`
+	Correo      string `gorm:"" json:"correo"`
 }
 
 //Clientes lista de cliente
 type Clientes []Cliente
 
 //NewCliente crea un objeto cliente y lo retorna
-func NewCliente(idHistorial int, nombreDueno, nombrePaciente, telefono, tipoAnimal string,
-	peso float32, edad int, vacunas string) *Cliente {
+func NewCliente(idMastoca int, nombreDueno, telefono, correo string) *Cliente {
 
 	cliente := &Cliente{
-		IDHistorial:    idHistorial,
-		NombreDueno:    nombreDueno,
-		NombrePaciente: nombrePaciente,
-		Telefono:       telefono,
-		TipoAnimal:     tipoAnimal,
-		Peso:           peso,
-		Edad:           edad,
-		Vacunas:        vacunas,
+		IDMascota:   idMastoca,
+		NombreDueno: nombreDueno,
+		Telefono:    telefono,
+		Correo:      correo,
 	}
 	return cliente
 }

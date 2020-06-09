@@ -9,16 +9,18 @@ type DetalleVenta struct {
 	IDDetalleVenta int `gorm:"PRIMARY_KEY;AUTO_INCREMENT" json:"id_detalle_venta"`
 	IDServicio     int `gorm:"" json:"id_servicio"`
 	IDVenta        int `gorm:"" json:"id_venta"`
+	IDEmpleado     int `gorm:"" json:"id_empleado"`
 }
 
 //DetalleVentas lista de detalle venta
 type DetalleVentas []DetalleVenta
 
 //NewDetalleVenta f
-func NewDetalleVenta(idServicio, idVenta int) *DetalleVenta {
+func NewDetalleVenta(idServicio, idVenta, idEmpleado int) *DetalleVenta {
 	detalleVenta := &DetalleVenta{
 		IDServicio: idServicio,
 		IDVenta:    idVenta,
+		IDEmpleado: idEmpleado,
 	}
 	return detalleVenta
 }

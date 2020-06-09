@@ -60,11 +60,13 @@ func CreateDBConn() {
 func autoMigrateTables() {
 	// Migrate the schema
 	db.AutoMigrate(&Agenda{})
-	db.AutoMigrate(&Cita{})
+	db.AutoMigrate(&CitaReservada{})
 	db.AutoMigrate(&Cliente{})
 	db.AutoMigrate(&DetalleVenta{})
 	db.AutoMigrate(&Empleado{})
-	db.AutoMigrate(&Historial{})
+	db.AutoMigrate(&HistorialConsulta{})
+	db.AutoMigrate(&Mascota{})
+	db.AutoMigrate(&Servicio{})
 	db.AutoMigrate(&Venta{})
 }
 
