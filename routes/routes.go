@@ -28,6 +28,8 @@ func empleadoRoutes(app *fiber.App) {
 
 func webApp(app *fiber.App) {
 	app.Get("/historial/", handlers.Historial)
+	app.Get("/agendar/", handlers.AgendarCita)
+	app.Post("/agendar/", handlers.AgendarCita)
 	app.Get("/agenda/", handlers.Agenda)
 	app.Get("/consulta/", handlers.Consulta)
 	app.Get("/registrar/", handlers.Registrar)

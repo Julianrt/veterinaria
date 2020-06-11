@@ -17,10 +17,9 @@ type Cliente struct {
 type Clientes []Cliente
 
 //NewCliente crea un objeto cliente y lo retorna
-func NewCliente(idMastoca int, nombreDueno, telefono, correo string) *Cliente {
+func NewCliente(nombreDueno, telefono, correo string) *Cliente {
 
 	cliente := &Cliente{
-		IDMascota:   idMastoca,
 		NombreDueno: nombreDueno,
 		Telefono:    telefono,
 		Correo:      correo,
