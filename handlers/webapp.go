@@ -39,16 +39,24 @@ func AgendarCita(c *fiber.Ctx) {
 			return
 		}
 
-		cliente := models.NewCliente(nombreDueno, telefono, correo)
-		if err := cliente.Save(); err != nil {
-			log.Println("No se pudo guardar el cliente -> " + err.Error())
+		cliente, err := models.GetClienteByTelefono(telefono)
+		if cliente.IDDueno == 0 || err != nil {
+			log.Println("ERROR: " + err.Error())
+			cliente = models.NewCliente(nombreDueno, telefono, correo)
+			if err = cliente.Save(); err != nil {
+				log.Println("No se pudo guardar el cliente -> " + err.Error())
+			}
 		}
 
-		mascota := new(models.Mascota)
-		mascota.IDDueno = cliente.IDDueno
-		mascota.NombreMascota = nombreMascota
-		if err := mascota.Save(); err != nil {
-			log.Println("No se pudo guardar la mascota -> " + err.Error())
+		mascota, err := models.ValidateMascotaOwner(cliente.IDDueno, nombreMascota)
+		if err != nil || mascota.IDMascota == 0 {
+			log.Println("No se encontro es mascota")
+			mascota.IDDueno = cliente.IDDueno
+			mascota.NombreMascota = nombreMascota
+			err = mascota.Save()
+			if err != nil {
+				log.Println("No se pudo guardar la mascota -> " + err.Error())
+			}
 		}
 
 		date, err := utils.FillDate(fecha, hora)

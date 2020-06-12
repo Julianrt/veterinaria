@@ -94,14 +94,20 @@ func First(out interface{}, where ...interface{}) error {
 }
 
 //FirstWithCondition gets a record by a condition with a specific column
-func FirstWithCondition(out interface{}, query interface{}, value interface{}) error {
-	result := db.Where(query, value).First(out)
+func FirstWithCondition(out, query interface{}, value ...interface{}) error {
+	result := db.Where(query, value...).First(out)
 	return result.Error
 }
 
 //Find gets records
 func Find(out interface{}, where ...interface{}) error {
 	result := db.Find(out, where...)
+	return result.Error
+}
+
+//FindWithCondition gets records by conditions
+func FindWithCondition(out, query interface{}, value ...interface{}) error {
+	result := db.Where(query, value...).Find(out)
 	return result.Error
 }
 

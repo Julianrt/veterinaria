@@ -36,10 +36,24 @@ func GetMascotas() (*Mascotas, error) {
 	return &mascotas, err
 }
 
+//GetMascotasByIDDueno f
+func GetMascotasByIDDueno(idDueno int) (*Mascotas, error) {
+	var mascotas Mascotas
+	err := FindWithCondition(&mascotas, "id_dueno = ?", idDueno)
+	return &mascotas, err
+}
+
 //GetMascotaByID f
 func GetMascotaByID(id int) (*Mascota, error) {
 	var mascota Mascota
 	err := First(&mascota, id)
+	return &mascota, err
+}
+
+//ValidateMascotaOwner checa si el cliente ya tiene una mascota registrada con ese nombre
+func ValidateMascotaOwner(idDueno int, nombreMascota string) (*Mascota, error) {
+	var mascota Mascota
+	err := FirstWithCondition(&mascota, "id_dueno = ? AND nombre_mascota = ?", idDueno, nombreMascota)
 	return &mascota, err
 }
 
