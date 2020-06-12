@@ -19,7 +19,7 @@
                 <li><a href="/historial/">Historial</a></li>
                 <li><a href="/agendar/">Agendar cita</a></li>
                 <li class="active"><a href="/agenda/">Agenda</a></li>
-                <li><a href="/registrar/">Registrar</a></li>
+                <!--<li><a href="/registrar/">Registrar</a></li>-->
                 <li><a href="/consulta/">Consulta</a></li>
             </ul>
         </div>
@@ -49,12 +49,14 @@
                                     </thead>
                             
                                     <tbody>
+                                        {{range $key, $val := .Citas}}
                                         <tr>
-                                            <td>10</td>
-                                            <td>set</td>
-                                            <td>1 / 6 / 2020 - 17:30</td>
+                                            <td>{{$val.IDCita}}</td>
+                                            <td>{{$val.IDDueno}}</td>
+                                            <td>{{$val.Fecha}}</td>
                                             <td>0000000000</td>
                                         </tr>
+                                        {{end}}
                                     </tbody>
                                 </table>
                             </div>

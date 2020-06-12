@@ -39,6 +39,16 @@ func AgendarCita(c *fiber.Ctx) {
 			return
 		}
 
+		date, err := utils.FillDate(fecha, hora)
+		if err != nil {
+			log.Println(err.Error())
+		}
+		if !utils.ValidateDate(date) {
+			log.Println("Fecha incorrecta para guardar cita")
+			c.Redirect("/agendar/")
+			return
+		}
+
 		cliente, err := models.GetClienteByTelefono(telefono)
 		if cliente.IDDueno == 0 || err != nil {
 			log.Println("ERROR: " + err.Error())
@@ -59,10 +69,6 @@ func AgendarCita(c *fiber.Ctx) {
 			}
 		}
 
-		date, err := utils.FillDate(fecha, hora)
-		if err != nil {
-			log.Println(err.Error())
-		}
 		cita := models.NewCita(cliente.IDDueno, mascota.IDMascota, date)
 		if err := cita.Save(); err != nil {
 			log.Println("No se pude guardar la cita -> " + err.Error())
@@ -75,9 +81,22 @@ func AgendarCita(c *fiber.Ctx) {
 
 //Agenda handler que renderiza un template
 func Agenda(c *fiber.Ctx) {
-	c.Render("agenda", fiber.Map{
-		"Title": "Agenda",
-	})
+	var citas models.Citas
+	err := models.Find(&citas)
+	if err != nil || len(citas) == 0 {
+		c.Send("Error: " + err.Error())
+		return
+	}
+
+	data := struct {
+		Citas []models.CitaReservada
+	}{
+		citas,
+	}
+
+	if err := c.Render("agenda", data); err != nil {
+		log.Println(err.Error())
+	}
 }
 
 //Consulta handler que renderiza un template

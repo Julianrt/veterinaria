@@ -11,9 +11,7 @@ import (
 func StartHandleRoutes(app *fiber.App) {
 	app.Settings.Templates = html.New("./templates", ".html")
 
-	app.Get("/", func(c *fiber.Ctx) {
-		c.Send("Jalando")
-	})
+	app.Get("/", handlers.AgendarCita)
 	empleadoRoutes(app)
 	webApp(app)
 }

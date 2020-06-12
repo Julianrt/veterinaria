@@ -7,6 +7,21 @@ import (
 	"time"
 )
 
+//ValidateDate f
+func ValidateDate(fechaCita time.Time) bool {
+	now := time.Now()
+	fechaAhora := time.Date(now.Year(), now.Month(), now.Day(),
+		now.Hour(), now.Minute(), 0, 0, time.UTC)
+
+	if fechaAhora.Equal(fechaCita) {
+		return false
+	}
+	if fechaAhora.After(fechaCita) {
+		return false
+	}
+	return true
+}
+
 //FillDate f
 func FillDate(fecha, tiempo string) (time.Time, error) {
 	year, month, day, err := splitDate(fecha)
