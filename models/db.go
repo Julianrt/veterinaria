@@ -111,6 +111,12 @@ func FindWithCondition(out, query interface{}, value ...interface{}) error {
 	return result.Error
 }
 
+//FindJoins gets records joining tables
+func FindJoins(table, columns, query string, out interface{}, value ...interface{}) error {
+	result := db.Table(table).Select(columns).Joins(query, value...).Scan(out)
+	return result.Error
+}
+
 //Save changes on db
 func Save(value interface{}) error {
 	result := db.Save(value)

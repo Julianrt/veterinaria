@@ -16,11 +16,9 @@
         <div class="nav-wrapper teal">
         <a href="/historial/" class="brand-logo right">veterinaria</a>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
-                <li><a href="/historial/">Historial</a></li>
+                <li><a href="/historial/">Historial de consultas</a></li>
                 <li><a href="/agendar/">Agendar cita</a></li>
                 <li><a href="/agenda/">Agenda</a></li>
-                <!--<li><a href="/registrar/">Registrar</a></li>-->
-                <li class="active"><a href="/consulta/">Consulta</a></li>
             </ul>
         </div>
     </nav>
@@ -31,41 +29,103 @@
             <div class="col s12">
                 <div class="card">
                     <div class="card-content">
+
                         <div class="row">
                             <div class="col s12">
                                 <h3 class="center">Consulta</h3>
                             </div>
                         </div>
+
+                        <form action="/consulta/?cliente={{.Cliente.IDDueno}}&mascota={{.Mascota.IDMascota}}" method="POST">
                 
-                        <div class="row">
-                            <div class="col s6">
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <input id="enfermedad" type="text" class="validate">
-                                        <label for="enfermedad">Enfermedad</label>
+                            <div class="row">
+
+                                <div class="col s8">
+
+                                    <div class="row">
+
+                                        <div class="col s6">
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input id="nombre_dueno" name="nombre_dueno" type="text" class="validate" value="{{.Cliente.NombreDueno}}" disabled>
+                                                    <label for="nombre_dueno">Nombre del dueño</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input id="nombre_mascota" name="nombre_mascota" type="text" class="validate" value="{{.Mascota.NombreMascota}}" disabled>
+                                                    <label for="nombre_mascota">Nombre de la mascota</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input id="edad" name="edad" type="text" class="validate" value="{{.Mascota.Edad}}">
+                                                    <label for="edad">Edad de la mascota</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col s6">
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input id="peso" name="peso" type="text" class="validate" value="{{.Mascota.Peso}}">
+                                                    <label for="peso">Peso de la mascota</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input id="vacunas" name="vacunas" type="text" class="validate" value="{{.Mascota.Vacunas}}">
+                                                    <label for="vacunas">Vacunas</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input id="tipo_animal" name="tipo_animal" type="text" class="validate" value="{{.Mascota.TipoAnimal}}">
+                                                    <label for="tipo_animal">Tipo de animal</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <input id="fecha" name="fecha" type="text" class="datepicker" required value="{{.Cita.Fecha}}" disabled>
+                                            <label for="fecha">Fecha de la cita</label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <input id="medicamento" type="text" class="validate">
-                                        <label for="medicamento">Medicamento</label>
+
+                                
+                                <div class="col s4">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <a href="/historial/" class="waves-effect waves-light btn col s12 black-text">Ver historial</a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <input value="Actualizar datos" id="submit" type="submit" class="waves-effect waves-light btn col s12">
+                                        </div>
                                     </div>
                                 </div>
+                                
                             </div>
-                            <div class="col s6">
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <textarea id="prescripcion" class="materialize-textarea"></textarea>
-                                        <label for="prescripcion">Prescripcion</label>
-                                    </div>
+                            
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="prescripcion" name="prescripcion" class="materialize-textarea"></textarea>
+                                    <label for="prescripcion">Prescripcion</label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input value="aceptar" id="submit" type="submit" class="waves-effect waves-light btn col s12">
+
+                            <div class="row">
+                                <div class="col s4 right">
+                                    <a href="/agenda/" class="btn waves-effect waves-light col s12 red black-text">Cancelar</a>
+                                </div>
                             </div>
-                        </div>
+
+                        </form>
+
                     </div>
                 </div>
             </div>

@@ -16,11 +16,9 @@
         <div class="nav-wrapper teal">
         <a href="/historial/" class="brand-logo right">veterinaria</a>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
-                <li class="active"><a href="/historial/">Historial</a></li>
+                <li class="active"><a href="/historial/">Historial de consultas</a></li>
                 <li><a href="/agendar/">Agendar cita</a></li>
                 <li><a href="/agenda/">Agenda</a></li>
-                <!--<li><a href="/registrar/">Registrar</a></li>-->
-                <li><a href="/consulta/">Consulta</a></li>
             </ul>
         </div>
     </nav>
@@ -42,29 +40,29 @@
                                 <table class="centered highlight striped">
                                     <thead>
                                         <tr>
-                                            <th>id historial</th>
-                                            <th>id dueño</th>
-                                            <th>nombre</th>
-                                            <th>tipo de animal</th>
-                                            <th>vacunas</th>
-                                            <th>peso</th>
-                                            <th>tamaño</th>
-                                            <th>enfermedades</th>
-                                            <th>medicamentos</th>
+                                            <th>Dueño</th>
+                                            <th>Mascota</th>
+                                            <th>Tipo de animal</th>
+                                            <th>Edad</th>
+                                            <th>Peso</th>
+                                            <th>Vacunas</th>
+                                            <th>Prescripcion</th>
+                                            <th>Fecha</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {{range $key, $val := .Consultas}}
                                         <tr>
-                                            <td>10</td>
-                                            <td>5</td>
-                                            <td>set</td>
-                                            <td>perro</td>
-                                            <td>parvovirus</td>
-                                            <td>3.5</td>
-                                            <td>1</td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{$val.NombreDueno}}</td>
+                                            <td>{{$val.NombreMascota}}</td>
+                                            <td>{{$val.TipoAnimal}}</td>
+                                            <td>{{$val.Edad}} años</td>
+                                            <td>{{$val.Peso}} kg</td>
+                                            <td>{{$val.Vacunas}}</td>
+                                            <td>{{$val.Prescripcion}}</td>
+                                            <td>{{$val.FechaConsulta}}</td>
                                         </tr>
+                                        {{end}}
                                     </tbody>
                                 </table>
                             </div>

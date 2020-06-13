@@ -30,5 +30,6 @@ func webApp(app *fiber.App) {
 	app.Post("/agendar/", handlers.AgendarCita)
 	app.Get("/agenda/", handlers.Agenda)
 	app.Get("/consulta/", handlers.Consulta)
+	app.Post("/consulta/", handlers.Consulta)
 	app.Get("/registrar/", handlers.Registrar)
 }

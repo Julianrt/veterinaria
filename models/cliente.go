@@ -41,6 +41,16 @@ func GetClienteByID(id int) (*Cliente, error) {
 	return &cliente, err
 }
 
+//GetClienteByCita f
+func GetClienteByCita(idCita int) (*Cliente, error) {
+	var cita CitaReservada
+	if err := First(&cita, idCita); err != nil {
+		return nil, err
+	}
+	cliente, err := GetClienteByID(cita.IDDueno)
+	return cliente, err
+}
+
 //GetClienteByTelefono f
 func GetClienteByTelefono(telefono string) (*Cliente, error) {
 	var cliente Cliente

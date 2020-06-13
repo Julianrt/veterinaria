@@ -16,11 +16,9 @@
         <div class="nav-wrapper teal">
         <a href="/historial/" class="brand-logo right">veterinaria</a>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
-                <li><a href="/historial/">Historial</a></li>
+                <li><a href="/historial/">Historial de consultas</a></li>
                 <li><a href="/agendar/">Agendar cita</a></li>
                 <li class="active"><a href="/agenda/">Agenda</a></li>
-                <!--<li><a href="/registrar/">Registrar</a></li>-->
-                <li><a href="/consulta/">Consulta</a></li>
             </ul>
         </div>
     </nav>
@@ -41,20 +39,24 @@
                                 <table class="centered highlight striped">
                                     <thead>
                                         <tr>
-                                            <th>id</th>
-                                            <th>nombre del cliente</th>
-                                            <th>fecha</th>
-                                            <th>telefono</th>
+                                            <th>Nombre del cliente</th>
+                                            <th>Nombre de la mascota</th>
+                                            <th>Telefono</th>
+                                            <th>Correo</th>
+                                            <th>Fecha</th>
+                                            <th>Consultar</th>
                                         </tr>
                                     </thead>
                             
                                     <tbody>
                                         {{range $key, $val := .Citas}}
                                         <tr>
-                                            <td>{{$val.IDCita}}</td>
-                                            <td>{{$val.IDDueno}}</td>
+                                            <td>{{$val.NombreDueno}}</td>
+                                            <td>{{$val.NombreMascota}}</td>
+                                            <td>{{$val.Telefono}}</td>
+                                            <td>{{$val.Correo}}</td>
                                             <td>{{$val.Fecha}}</td>
-                                            <td>0000000000</td>
+                                            <td><a href="/consulta/?cita={{$val.IDCita}}" class="btn">*</a></td>
                                         </tr>
                                         {{end}}
                                     </tbody>

@@ -50,6 +50,16 @@ func GetMascotaByID(id int) (*Mascota, error) {
 	return &mascota, err
 }
 
+//GetMascotaByCita f
+func GetMascotaByCita(idCita int) (*Mascota, error) {
+	var cita CitaReservada
+	if err := First(&cita, idCita); err != nil {
+		return nil, err
+	}
+	mascota, err := GetMascotaByID(cita.IDMascota)
+	return mascota, err
+}
+
 //ValidateMascotaOwner checa si el cliente ya tiene una mascota registrada con ese nombre
 func ValidateMascotaOwner(idDueno int, nombreMascota string) (*Mascota, error) {
 	var mascota Mascota

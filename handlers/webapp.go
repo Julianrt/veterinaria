@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"log"
+	"strconv"
 
 	"github.com/Julianrt/veterinaria/models"
 	"github.com/Julianrt/veterinaria/utils"
@@ -11,9 +12,18 @@ import (
 
 //Historial handler que renderiza un template
 func Historial(c *fiber.Ctx) {
-	c.Render("historial", fiber.Map{
-		"Title": "Historial",
-	})
+	consultas, err := models.GetConsultasShowOrderDesc()
+	if err != nil {
+		log.Println(err.Error())
+	}
+
+	data := struct {
+		Consultas models.ConsultasShow
+	}{
+		consultas,
+	}
+
+	c.Render("historial", data)
 }
 
 //AgendarCita handler que renderiza un template
@@ -81,17 +91,15 @@ func AgendarCita(c *fiber.Ctx) {
 
 //Agenda handler que renderiza un template
 func Agenda(c *fiber.Ctx) {
-	var citas models.Citas
-	err := models.Find(&citas)
-	if err != nil || len(citas) == 0 {
-		c.Send("Error: " + err.Error())
-		return
+	citas, err := models.GetCitasShowOrderByFecha()
+	if err != nil {
+		log.Println(err.Error())
 	}
 
 	data := struct {
-		Citas []models.CitaReservada
+		Citas models.CitasShow
 	}{
-		citas,
+		*citas,
 	}
 
 	if err := c.Render("agenda", data); err != nil {
@@ -101,9 +109,83 @@ func Agenda(c *fiber.Ctx) {
 
 //Consulta handler que renderiza un template
 func Consulta(c *fiber.Ctx) {
-	c.Render("consulta", fiber.Map{
-		"Title": "Consulta",
-	})
+
+	if c.Method() == "GET" {
+		idCita, err := strconv.Atoi(c.Query("cita"))
+		if err != nil {
+			log.Println(err.Error())
+		}
+
+		cita, err := models.GetCitaByID(idCita)
+		if err != nil || cita.IDCita == 0 {
+			log.Println("No se encontré la cita: " + err.Error())
+		}
+
+		cliente, err := models.GetClienteByCita(cita.IDCita)
+		if err != nil || cliente.IDDueno == 0 {
+			log.Println("No se encontró el cliente " + err.Error())
+		}
+
+		mascota, err := models.GetMascotaByCita(cita.IDCita)
+		if err != nil || mascota.IDMascota == 0 {
+			log.Println("No se encontró la mascota " + err.Error())
+		}
+
+		data := struct {
+			Cita    models.CitaReservada
+			Cliente models.Cliente
+			Mascota models.Mascota
+		}{
+			*cita,
+			*cliente,
+			*mascota,
+		}
+		c.Render("consulta", data)
+
+	} else if c.Method() == "POST" {
+
+		idCliente, err := strconv.Atoi(c.Query("cliente"))
+		if err != nil {
+			log.Println(err.Error())
+		}
+		cliente, err := models.GetClienteByID(idCliente)
+		if err != nil || cliente.IDDueno == 0 {
+			log.Println(err.Error())
+		}
+
+		idMascota, err := strconv.Atoi(c.Query("mascota"))
+		if err != nil {
+			log.Println(err.Error())
+		}
+		mascota, err := models.GetMascotaByID(idMascota)
+		if err != nil || mascota.IDMascota == 0 {
+			log.Println(err.Error())
+		}
+		if mascota.IDDueno != cliente.IDDueno {
+			log.Println("el cliente no es el dueño de la mascota")
+		}
+
+		edadMascota, _ := strconv.Atoi(c.FormValue("edad"))
+		pesoMascota, _ := strconv.ParseFloat(c.FormValue("peso"), 32)
+		vacunas := c.FormValue("vacunas")
+		tipoAnimal := c.FormValue("tipo_animal")
+		prescripcion := c.FormValue("prescripcion")
+
+		mascota.Edad = edadMascota
+		mascota.Peso = float32(pesoMascota)
+		mascota.Vacunas = vacunas
+		mascota.TipoAnimal = tipoAnimal
+
+		consulta := models.NewHistorial(cliente.IDDueno, mascota.IDMascota, prescripcion, utils.GetCurrentDate())
+		if err := consulta.Save(); err != nil {
+			log.Println("No se pudo guardar la consulta -> " + err.Error())
+		}
+
+		if err := mascota.Save(); err != nil {
+			log.Println("No se pudo actualizar a la mascota -> " + err.Error())
+		}
+		c.Redirect("/agenda/")
+	}
 }
 
 //Registrar handler que renderiza un template

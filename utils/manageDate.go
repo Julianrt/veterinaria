@@ -7,6 +7,11 @@ import (
 	"time"
 )
 
+//GetCurrentDate f
+func GetCurrentDate() time.Time {
+	return time.Now()
+}
+
 //ValidateDate f
 func ValidateDate(fechaCita time.Time) bool {
 	now := time.Now()
