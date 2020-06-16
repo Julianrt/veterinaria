@@ -4,6 +4,7 @@ import (
 	"github.com/Julianrt/veterinaria/models"
 	"github.com/Julianrt/veterinaria/routes"
 
+	"github.com/gofiber/cors"
 	"github.com/gofiber/fiber"
 )
 
@@ -14,7 +15,9 @@ func StartServer() {
 
 	app := fiber.New()
 
+	app.Use(cors.New())
+
 	routes.StartHandleRoutes(app)
 
-	app.Listen(3000)
+	app.Listen(":8080")
 }
