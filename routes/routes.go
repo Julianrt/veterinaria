@@ -13,7 +13,12 @@ func StartHandleRoutes(app *fiber.App) {
 
 	app.Get("/", handlers.AgendarCita)
 	empleadoRoutes(app)
+	serviciosRoutes(app)
 	webApp(app)
+}
+
+func serviciosRoutes(app *fiber.App) {
+	app.Get("/servicios/", handlers.GetServicios)
 }
 
 func empleadoRoutes(app *fiber.App) {
