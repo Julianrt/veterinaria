@@ -1,6 +1,8 @@
 package webserver
 
 import (
+	"os"
+
 	"github.com/Julianrt/veterinaria/models"
 	"github.com/Julianrt/veterinaria/routes"
 
@@ -19,5 +21,10 @@ func StartServer() {
 
 	routes.StartHandleRoutes(app)
 
-	app.Listen(":8080")
+	PORT := os.Getenv("PORT")
+	if PORT == "" {
+		PORT = "8080"
+	}
+
+	app.Listen(":" + PORT)
 }
