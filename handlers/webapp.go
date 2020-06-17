@@ -66,6 +66,12 @@ func AgendarCita(c *fiber.Ctx) {
 			if err = cliente.Save(); err != nil {
 				log.Println("No se pudo guardar el cliente -> " + err.Error())
 			}
+		} else {
+			if cliente.NombreDueno != nombreDueno || cliente.Correo != correo {
+				log.Println("Ese numero telefonico está registrado pero con otro cliente o correo")
+				c.Redirect("/agendar/")
+				return
+			}
 		}
 
 		mascota, err := models.ValidateMascotaOwner(cliente.IDDueno, nombreMascota)
