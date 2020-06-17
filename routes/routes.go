@@ -12,6 +12,7 @@ func StartHandleRoutes(app *fiber.App) {
 	app.Settings.Templates = html.New("./templates", ".html")
 
 	app.Get("/", handlers.AgendarCita)
+	app.Static("/public/", "./assets")
 	empleadoRoutes(app)
 	serviciosRoutes(app)
 	webApp(app)

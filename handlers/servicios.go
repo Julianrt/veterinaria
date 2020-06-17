@@ -17,7 +17,7 @@ func GetServicios(c *fiber.Ctx) {
 		Clave:     1,
 		Nombre:    "Consulta",
 		Precio:    50,
-		URLImagen: "https://lh3.googleusercontent.com/proxy/kBASuvkCQaHpuULIr7PRnaAAoYTqny4xeNyCQMdC14D7JZu73fDwmJBJrXKrgvctjgh7lH771xPm6PNtEaurKNaIQgD0FX4lOkOX2a_aFlBjUAZFAPvz5ygL3IltO3APeuWs",
+		URLImagen: "https://consulta-veterinaria.herokuapp.com/public/images/consulta.jpg",
 	}
 
 	if err := c.JSON(data); err != nil {
