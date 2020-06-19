@@ -13,9 +13,16 @@ func StartHandleRoutes(app *fiber.App) {
 
 	app.Get("/", handlers.AgendarCita)
 	app.Static("/public/", "./assets")
+	api(app)
+	webApp(app)
+}
+
+func api(app *fiber.App) {
 	empleadoRoutes(app)
 	serviciosRoutes(app)
-	webApp(app)
+
+	app.Get("/fechas_ocupadas/", handlers.FechasOcupadas)
+	app.Post("/agendar_consulta/", handlers.AgendarConsulta)
 }
 
 func serviciosRoutes(app *fiber.App) {

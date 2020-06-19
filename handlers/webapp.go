@@ -105,7 +105,7 @@ func Agenda(c *fiber.Ctx) {
 	data := struct {
 		Citas models.CitasShow
 	}{
-		*citas,
+		citas,
 	}
 
 	if err := c.Render("agenda", data); err != nil {
@@ -199,4 +199,14 @@ func Registrar(c *fiber.Ctx) {
 	c.Render("registrar", fiber.Map{
 		"Title": "Registrar",
 	})
+}
+
+//FechasOcupadas handler
+func FechasOcupadas(c *fiber.Ctx) {
+	fechas, err := utils.GetFechasOcupadas()
+	if err != nil {
+		log.Println(err)
+	}
+
+	c.JSON(fechas)
 }

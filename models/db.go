@@ -36,6 +36,7 @@ var db *gorm.DB
 func InitDB() {
 	CreateDBConn()
 	autoMigrateTables()
+	createDefault()
 }
 
 //CreateDBConn inicia una conexion con la base de datos
@@ -133,4 +134,14 @@ func Where(query interface{}, args ...interface{}) error {
 func Delete(value interface{}, where ...interface{}) error {
 	result := db.Delete(value, where...)
 	return result.Error
+}
+
+func createDefault() {
+	_, err := GetClienteByTelefono("api")
+	if err != nil {
+		cliente := NewCliente("api", "api", "api")
+		cliente.Save()
+		mascota := NewMascota(cliente.IDDueno, "api", "", 0, 0, "")
+		mascota.Save()
+	}
 }

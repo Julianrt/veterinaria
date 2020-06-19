@@ -10,7 +10,7 @@ type CitaShow struct {
 	NombreMascota string
 	Telefono      string
 	Correo        string
-	Fecha         string
+	Fecha         time.Time
 }
 
 //CitasShow una lista de citaShow
@@ -18,7 +18,7 @@ type CitasShow []CitaShow
 
 //GetCitasShowOrderByFecha obtiene las citas relacionando las tablas
 //y las ordena por la fecha
-func GetCitasShowOrderByFecha() (*CitasShow, error) {
+func GetCitasShowOrderByFecha() (CitasShow, error) {
 	var citas CitasShow
 	tabla := "cita_reservadas"
 	columns := "cita_reservadas.id_cita, clientes.nombre_dueno, mascota.nombre_mascota, "
@@ -28,7 +28,7 @@ func GetCitasShowOrderByFecha() (*CitasShow, error) {
 	conditions := "ORDER BY cita_reservadas.fecha"
 
 	err := FindJoins(tabla, columns, inner1+" "+inner2+" "+conditions, &citas)
-	return &citas, err
+	return citas, err
 }
 
 //ConsultaShow modelo para mostrar informacion de las consultas
@@ -63,4 +63,17 @@ func GetConsultasShowOrderDesc() (ConsultasShow, error) {
 
 	err := FindJoins(tabla, columns, join+conditions, &consultas)
 	return consultas, err
+}
+
+//Fechas estructura para publicar las fechas disponibles
+//a agendar una cita
+type Fechas struct {
+	Fecha string   `json:"fecha"`
+	Horas []string `json:"horas"`
+}
+
+//FechaCita estructura para leer por json y agendar cita
+type FechaCita struct {
+	Fecha string `json:"fecha"`
+	Hora  string `json:"hora"`
 }

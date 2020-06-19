@@ -2,9 +2,12 @@ package utils
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/Julianrt/veterinaria/models"
 )
 
 //GetCurrentDate f
@@ -125,4 +128,49 @@ func getMonth(month int) time.Month {
 		return time.December
 	}
 	return 0
+}
+
+//GetFechasOcupadas f
+func GetFechasOcupadas() ([]models.Fechas, error) {
+	var fechas []models.Fechas
+	citas, err := models.GetCitasShowOrderByFecha()
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(citas); i++ {
+
+		tiene, indice := tieneLaFecha(fechas, citas[i])
+		if !tiene {
+			horas := []string{getTimeByObTime(citas[i].Fecha)}
+			fechas = append(fechas, models.Fechas{
+				Fecha: getDateByObTime(citas[i].Fecha),
+				Horas: horas,
+			})
+		} else {
+			fechas[indice].Horas = append(fechas[indice].Horas, getTimeByObTime(citas[i].Fecha))
+		}
+
+	}
+
+	return fechas, nil
+}
+
+func tieneLaFecha(fechas []models.Fechas, cita models.CitaShow) (bool, int) {
+	indice := 0
+	for i := 0; i < len(fechas); i++ {
+		if fechas[i].Fecha == getDateByObTime(cita.Fecha) {
+			indice = i
+			return true, indice
+		}
+	}
+	return false, 0
+}
+
+func getDateByObTime(fecha time.Time) string {
+	return fmt.Sprintf("%d-%d-%d", fecha.Year(), fecha.Month(), fecha.Day())
+}
+
+func getTimeByObTime(hora time.Time) string {
+	return fmt.Sprintf("%02d:%02d", hora.Hour(), hora.Minute())
 }
