@@ -21,6 +21,7 @@ func api(app *fiber.App) {
 	empleadoRoutes(app)
 	serviciosRoutes(app)
 
+	app.Get("/fechas_disponibles/", handlers.FechasDisponibles)
 	app.Get("/fechas_ocupadas/", handlers.FechasOcupadas)
 	app.Post("/agendar_consulta/", handlers.AgendarConsulta)
 }

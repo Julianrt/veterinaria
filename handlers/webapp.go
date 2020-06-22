@@ -210,3 +210,9 @@ func FechasOcupadas(c *fiber.Ctx) {
 
 	c.JSON(fechas)
 }
+
+//FechasDisponibles handler
+func FechasDisponibles(c *fiber.Ctx) {
+	fechas := utils.GetFechasDisponibles()
+	c.JSON(fechas)
+}

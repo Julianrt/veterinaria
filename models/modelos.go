@@ -1,6 +1,8 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 //CitaShow modelo para mostrar informacion de las citas
 //con una llamada relacionando tablas en la base de datos

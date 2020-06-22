@@ -168,9 +168,85 @@ func tieneLaFecha(fechas []models.Fechas, cita models.CitaShow) (bool, int) {
 }
 
 func getDateByObTime(fecha time.Time) string {
-	return fmt.Sprintf("%d-%d-%d", fecha.Year(), fecha.Month(), fecha.Day())
+	return fmt.Sprintf("%d-%02d-%02d", fecha.Year(), fecha.Month(), fecha.Day())
 }
 
 func getTimeByObTime(hora time.Time) string {
 	return fmt.Sprintf("%02d:%02d", hora.Hour(), hora.Minute())
+}
+
+//GetFechasDisponibles f
+func GetFechasDisponibles() []models.Fechas {
+	fechasOcupadas, _ := GetFechasOcupadas()
+	fechasDisponibles := loadTodasLasFechas()
+
+	for i := 0; i < len(fechasOcupadas); i++ {
+		tieneLasFechas(fechasDisponibles, fechasOcupadas[i])
+	}
+	return fechasDisponibles
+}
+
+func tieneLasFechas(fechas []models.Fechas, fechaOcupada models.Fechas) {
+	for i := 0; i < len(fechas); i++ {
+		if fechas[i].Fecha == fechaOcupada.Fecha {
+			for j := 0; j < len(fechas[i].Horas); j++ {
+				for m := 0; m < len(fechaOcupada.Horas); m++ {
+					if fechas[i].Horas[j] == fechaOcupada.Horas[m] {
+						fechas[i].Horas = removeIndex(fechas[i].Horas, j)
+					}
+				}
+			}
+		}
+	}
+}
+
+func loadTodasLasFechas() []models.Fechas {
+	var dia int
+	var fechas []models.Fechas
+
+	now := time.Now()
+	mes, _ := strconv.Atoi(fmt.Sprintf("%d", now.Month()))
+
+	for i := mes; i <= 12; i++ {
+		if i == 1 || i == 3 || i == 5 || i == 7 || i == 8 || i == 10 || i == 12 {
+			if dia == 0 {
+				fechas = append(fechas, fillDate(i, now.Day(), 31)...)
+				dia++
+			} else {
+				fechas = append(fechas, fillDate(i, 0, 31)...)
+			}
+		} else if i == 2 {
+			if dia == 0 {
+				fechas = append(fechas, fillDate(i, now.Day(), 28)...)
+				dia++
+			} else {
+				fechas = append(fechas, fillDate(i, 0, 28)...)
+			}
+		} else if i == 4 || i == 6 || i == 9 || i == 11 {
+			if dia == 0 {
+				fechas = append(fechas, fillDate(i, now.Day(), 30)...)
+				dia++
+			} else {
+				fechas = append(fechas, fillDate(i, 0, 30)...)
+			}
+		}
+	}
+	return fechas
+}
+
+func fillDate(mes, dia, dias int) []models.Fechas {
+	var fechas []models.Fechas
+	for i := dia; i < dias; i++ {
+		fechas = append(fechas, models.Fechas{fmt.Sprintf("2020-%02d-%02d", mes, i+1), hoursWorked()})
+	}
+	return fechas
+}
+
+func hoursWorked() []string {
+	horas := []string{"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"}
+	return horas
+}
+
+func removeIndex(s []string, index int) []string {
+	return append(s[:index], s[index+1:]...)
 }
