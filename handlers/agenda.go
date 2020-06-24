@@ -23,17 +23,40 @@ func AgendarConsulta(c *fiber.Ctx) {
 		c.Status(http.StatusBadRequest).Send("Error: " + err.Error())
 		return
 	}
-	cliente, _ := models.GetClienteByTelefono("api")
-	mascota, _ := models.ValidateMascotaOwner(cliente.IDDueno, "api")
+
+	if len(fecha.ClienteCorreo) < 1 {
+		c.Status(http.StatusBadRequest).Send("Error: necesario escribir un correo")
+		return
+	}
+	cliente, err := models.GetClienteByCorreo(fecha.ClienteCorreo)
+	if err != nil {
+		if err.Error() == "record not found" {
+			cliente.NombreDueno = fecha.ClienteNombre
+			cliente.Correo = fecha.ClienteCorreo
+			if err := cliente.Save(); err != nil {
+				c.Status(http.StatusInternalServerError).Send("Error: " + err.Error())
+				return
+			}
+		} else {
+			c.Status(http.StatusInternalServerError).Send("Error: " + err.Error())
+			return
+		}
+	}
+	if cliente.NombreDueno != fecha.ClienteNombre {
+		c.Status(http.StatusBadRequest).Send("Error: Este correo está registrado con otro cliente")
+		return
+	}
+
+	//mascota, _ := models.ValidateMascotaOwner(cliente.IDDueno, "api")
 
 	var cita models.CitaReservada
 	cita.IDDueno = cliente.IDDueno
-	cita.IDMascota = mascota.IDMascota
+	cita.IDMascota = 1
 	cita.Fecha = date
 	err = cita.Save()
 	if err != nil {
 		c.Status(http.StatusInternalServerError).Send("Error: " + err.Error())
 		return
 	}
-	c.JSON(cita)
+	c.Status(http.StatusCreated)
 }

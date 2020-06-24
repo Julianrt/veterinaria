@@ -40,8 +40,6 @@
                                     <thead>
                                         <tr>
                                             <th>Nombre del cliente</th>
-                                            <th>Nombre de la mascota</th>
-                                            <th>Telefono</th>
                                             <th>Correo</th>
                                             <th>Fecha</th>
                                             <th>Consultar</th>
@@ -52,8 +50,6 @@
                                         {{range $key, $val := .Citas}}
                                         <tr>
                                             <td>{{$val.NombreDueno}}</td>
-                                            <td>{{$val.NombreMascota}}</td>
-                                            <td>{{$val.Telefono}}</td>
                                             <td>{{$val.Correo}}</td>
                                             <td>{{$val.Fecha}}</td>
                                             <td><a href="/consulta/?cita={{$val.IDCita}}" class="btn">*</a></td>

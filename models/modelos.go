@@ -76,6 +76,8 @@ type Fechas struct {
 
 //FechaCita estructura para leer por json y agendar cita
 type FechaCita struct {
-	Fecha string `json:"fecha"`
-	Hora  string `json:"hora"`
+	ClienteNombre string `json:"nombre_cliente"`
+	ClienteCorreo string `json:"correo"`
+	Fecha         string `json:"fecha"`
+	Hora          string `json:"hora"`
 }

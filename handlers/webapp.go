@@ -159,13 +159,10 @@ func Consulta(c *fiber.Ctx) {
 			log.Println(err.Error())
 		}
 
-		idMascota, err := strconv.Atoi(c.Query("mascota"))
-		if err != nil {
-			log.Println(err.Error())
-		}
-		mascota, err := models.GetMascotaByID(idMascota)
+		mascota, err := models.ValidateMascotaOwner(cliente.IDDueno, c.FormValue("nombre_mascota"))
 		if err != nil || mascota.IDMascota == 0 {
-			log.Println(err.Error())
+			mascota.NombreMascota = c.FormValue("nombre_mascota")
+			mascota.IDDueno = cliente.IDDueno
 		}
 		if mascota.IDDueno != cliente.IDDueno {
 			log.Println("el cliente no es el dueño de la mascota")
@@ -181,15 +178,15 @@ func Consulta(c *fiber.Ctx) {
 		mascota.Peso = float32(pesoMascota)
 		mascota.Vacunas = vacunas
 		mascota.TipoAnimal = tipoAnimal
+		if err := mascota.Save(); err != nil {
+			log.Println("No se pudo actualizar a la mascota -> " + err.Error())
+		}
 
 		consulta := models.NewHistorial(cliente.IDDueno, mascota.IDMascota, prescripcion, utils.GetCurrentDate())
 		if err := consulta.Save(); err != nil {
 			log.Println("No se pudo guardar la consulta -> " + err.Error())
 		}
 
-		if err := mascota.Save(); err != nil {
-			log.Println("No se pudo actualizar a la mascota -> " + err.Error())
-		}
 		c.Redirect("/agenda/")
 	}
 }

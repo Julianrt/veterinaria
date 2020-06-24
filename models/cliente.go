@@ -58,6 +58,13 @@ func GetClienteByTelefono(telefono string) (*Cliente, error) {
 	return &cliente, err
 }
 
+//GetClienteByCorreo f
+func GetClienteByCorreo(correo string) (*Cliente, error) {
+	var cliente Cliente
+	err := FirstWithCondition(&cliente, "correo = ?", correo)
+	return &cliente, err
+}
+
 //Save si el IDDueno es 0, se registra el modelo en la bd,
 // y si es diferente a 0, se actualiza en bd
 func (c *Cliente) Save() error {
